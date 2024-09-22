@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    kotlin("kapt")
+    alias(libs.plugins.dagger.hilt)
 }
 
 android {
@@ -49,6 +51,11 @@ android {
     }
 }
 
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -66,4 +73,17 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation(libs.dagger.hilt.android)
+    kapt(libs.dagger.hilt.compiler)
+    implementation(libs.retrofit){
+        exclude(module = "okhttp")
+    }
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.retrofit.okhttp)
+    implementation(libs.retrofit.urlConnection)
+    implementation(libs.retrofit.logging)
+    implementation(libs.gson)
+
+
 }
